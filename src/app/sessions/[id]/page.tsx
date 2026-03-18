@@ -138,7 +138,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </Link>
       </div>
 
-      <div className="flex-mobile-col flex gap-12 items-start" style={{ display: "flex" }}>
+      <div className="flex-mobile-col flex gap-12 items-start" style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
         {/* Cột trái: Hóa đơn */}
         <div style={{ flex: 1, width: "100%" }}>
           <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
@@ -245,8 +245,8 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Cột phải: Kết quả chia tiền */}
-        <div className="flex-1" style={{ position: "sticky", top: "2rem", width: "100%", maxWidth: "400px" }}>
-          <div className="card">
+        <div className="flex-1" style={{ position: "sticky", top: "2rem", width: "100%", maxWidth: "400px", minWidth: "320px" }}>
+          <div className="card" style={{ padding: "2rem" }}>
             <h3 className="mb-4" style={{ textAlign: "center", borderBottom: "1px solid var(--border)", paddingBottom: "1rem" }}>💰 TỔNG KẾT</h3>
             
             <h4 style={{ color: "#94a3b8", fontSize: "0.875rem", textTransform: "uppercase" }}>Theo Nhóm / Gia đình</h4>
