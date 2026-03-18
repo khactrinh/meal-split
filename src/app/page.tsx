@@ -31,7 +31,7 @@ export default function Home() {
       <div className="flex justify-between items-center flex-mobile-col mb-8">
         <div>
           <h2>Lịch sử chi tiêu</h2>
-          <p>Quản lý các bữa ăn và buổi tiệc của bạn</p>
+          <p>Quản lý các hoạt động và chi phí chung của bạn</p>
         </div>
         <Link href="/sessions/new" className="btn btn-primary" style={{ width: "auto" }}>
           + Thêm phiên mới
@@ -45,8 +45,8 @@ export default function Home() {
       ) : sessions.length === 0 ? (
         <div className="card" style={{ textAlign: "center", padding: "4rem 2rem", borderStyle: "dashed", borderColor: "var(--border)" }}>
           <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🍽️</div>
-          <h3>Chưa có phiên ăn nào</h3>
-          <p>Bắt đầu bằng việc tạo một phiên chia tiền mới ngay khi đi ăn!</p>
+          <h3>Chưa có hoạt động nào</h3>
+          <p>Bắt đầu bằng việc tạo một phiên chia tiền mới!</p>
           <Link href="/sessions/new" className="btn btn-primary mt-4" style={{ width: "auto" }}>
             Tạo phiên ngay
           </Link>

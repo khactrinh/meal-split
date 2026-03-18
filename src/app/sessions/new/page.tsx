@@ -49,7 +49,7 @@ export default function NewSessionPage() {
   return (
     <div className="animate-fade-in">
       <div className="flex justify-between items-center mb-8 flex-mobile-col">
-        <h2>🎉 Tạo phiên bàn tiệc mới</h2>
+        <h2>🎉 Tạo phiên & Hoạt động mới</h2>
         <Link href="/" className="btn btn-outline" style={{ width: "auto" }}>
           Hủy bỏ
         </Link>
@@ -58,10 +58,10 @@ export default function NewSessionPage() {
       <form onSubmit={handleSubmit} className="flex-col gap-4">
         <div className="card mb-4">
           <div className="form-group">
-            <label className="form-label">Tên buổi tiệc / Ăn uống</label>
+            <label className="form-label">Tên hoạt động (VD: Đánh cầu lông, Nhậu cuối tuần...)</label>
             <input 
               className="form-input" 
-              placeholder="VD: Nhậu cuối tuần, Lẩu thái trưa T7..." 
+              placeholder="Nhập tên hoạt động..." 
               value={formData.name}
               onChange={e => setFormData({...formData, name: e.target.value})}
               autoFocus

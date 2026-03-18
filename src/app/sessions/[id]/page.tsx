@@ -138,17 +138,17 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </Link>
       </div>
 
-      <div className="flex-mobile-col flex gap-8 items-start" style={{ display: "flex" }}>
+      <div className="flex-mobile-col flex gap-12 items-start" style={{ display: "flex" }}>
         {/* Cột trái: Hóa đơn */}
         <div style={{ flex: 1, width: "100%" }}>
-          <div className="flex justify-between items-center mb-4">
-            <h3>Danh sách món ăn</h3>
+          <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+            <h3>Danh sách chi tiêu</h3>
             <button 
               onClick={() => setShowAddExpense(!showAddExpense)}
               className="btn-primary btn" 
               style={{ width: "auto", padding: "0.25rem 1rem", borderRadius: "999px" }}
             >
-              + Thêm mục mới
+              + Thêm khoản chi
             </button>
           </div>
 
@@ -157,8 +157,8 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
               <form onSubmit={handleAddExpense}>
                 <div className="flex gap-4 flex-mobile-col">
                   <div className="form-group flex-1">
-                    <label className="form-label">Tên món</label>
-                    <input className="form-input" required value={expenseForm.name} onChange={e => setExpenseForm({...expenseForm, name: e.target.value})} placeholder="Ăn gì..." />
+                    <label className="form-label">Nội dung chi (VD: Ăn uống, vé xe, cầu lông...)</label>
+                    <input className="form-input" required value={expenseForm.name} onChange={e => setExpenseForm({...expenseForm, name: e.target.value})} placeholder="Nhập nội dung..." />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Thành tiền (VNĐ)</label>
@@ -252,9 +252,9 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
             <h4 style={{ color: "#94a3b8", fontSize: "0.875rem", textTransform: "uppercase" }}>Theo Nhóm / Gia đình</h4>
             <div className="mb-4">
               {Object.values(calculateResult.byGroup).filter(g => g.total > 0).map((g: any, idx) => (
-                <div key={idx} className="flex justify-between items-center mb-2">
-                  <strong>{g.groupName}</strong>
-                  <span style={{ fontWeight: "700", color: "var(--success)" }}>{formatVND(g.total)}</span>
+                <div key={idx} className="flex justify-between items-start mb-2 flex-wrap gap-x-4">
+                   <strong style={{ flex: 1, minWidth: "120px" }}>{g.groupName}</strong>
+                   <span style={{ fontWeight: "700", color: "var(--success)", whiteSpace: "nowrap" }}>{formatVND(g.total)}</span>
                 </div>
               ))}
               {Object.values(calculateResult.byGroup).filter(g => g.total > 0).length === 0 && (
