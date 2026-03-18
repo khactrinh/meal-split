@@ -19,10 +19,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="container">
-            <header style={{ 
-              display: "flex", 
-              justifyContent: "space-between", 
-              alignItems: "center",
+            <header className="flex justify-between items-center flex-mobile-col" style={{ 
               padding: "1rem 0",
               borderBottom: "1px solid var(--border)",
               marginBottom: "2rem"

@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center flex-mobile-col mb-8">
         <div>
           <h2>Lịch sử chi tiêu</h2>
           <p>Quản lý các bữa ăn và buổi tiệc của bạn</p>
@@ -55,7 +55,7 @@ export default function Home() {
         <div className="flex-col gap-4">
           {sessions.map((session) => (
             <Link href={`/sessions/${session.id}`} key={session.id}>
-              <div className="card" style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div className="card flex justify-between items-center flex-mobile-col" style={{ cursor: "pointer", gap: "1rem" }}>
                 <div>
                   <h3>{session.name}</h3>
                   <div className="flex gap-2 items-center" style={{ fontSize: "0.875rem", color: "#94a3b8" }}>

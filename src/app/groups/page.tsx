@@ -31,7 +31,7 @@ export default function GroupsPage() {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 flex-mobile-col">
         <h2>Quản lý Nhóm & Tham dự</h2>
         <Link href="/" className="btn btn-outline" style={{ width: "auto" }}>
           ← Quay lại
@@ -40,7 +40,7 @@ export default function GroupsPage() {
 
       <div className="card mb-8">
         <h3>✨ Thêm nhóm mới</h3>
-        <form onSubmit={handleCreateGroup} className="flex gap-4 items-end mt-4">
+        <form onSubmit={handleCreateGroup} className="flex gap-4 items-end mt-4 flex-mobile-col" style={{ alignItems: "stretch" }}>
           <div className="form-group mb-0" style={{ flex: 1 }}>
             <label className="form-label">Tên nhóm</label>
             <input 
@@ -71,8 +71,8 @@ export default function GroupsPage() {
       <div className="flex-col gap-4">
         {loading ? <p>Đang tải...</p> : groups.map(group => (
           <div key={group.id} className="card" style={{ borderLeft: `4px solid ${group.color}` }}>
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2">
+            <div className="flex justify-between items-center mb-4 flex-mobile-col">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span style={{ fontSize: "1.5rem" }}>
                   {GROUP_TYPES.find(t => t.value === group.type)?.emoji}
                 </span>

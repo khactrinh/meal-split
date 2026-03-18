@@ -48,7 +48,7 @@ export default function NewSessionPage() {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 flex-mobile-col">
         <h2>🎉 Tạo phiên bàn tiệc mới</h2>
         <Link href="/" className="btn btn-outline" style={{ width: "auto" }}>
           Hủy bỏ
@@ -83,7 +83,7 @@ export default function NewSessionPage() {
           <h3>👨‍👩‍👧 Ai sẽ tham dự? (Chọn nhóm)</h3>
           <p>Chọn các nhóm (gia đình, cặp đôi, bạn bè) đã có sẵn.</p>
           
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "1rem", marginTop: "1rem" }}>
             {groups.length === 0 ? (
               <p style={{ gridColumn: "span 2", textAlign: "center", padding: "2rem" }}>
                 Chưa có nhóm nào. Vui lòng <Link href="/groups" style={{ color: "var(--primary)" }}>tạo nhóm trước</Link>.
@@ -125,7 +125,7 @@ export default function NewSessionPage() {
         <button 
           type="submit" 
           className="btn btn-primary" 
-          style={{ fontSize: "1.25rem", padding: "1rem" }}
+          style={{ fontSize: "1.25rem", padding: "1rem", width: "100%" }}
           disabled={loading || selectedGroups.length === 0}
         >
           {loading ? "Đang xử lý..." : "Tiếp tục thêm hóa đơn →"}

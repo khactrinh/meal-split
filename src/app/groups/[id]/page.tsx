@@ -60,22 +60,24 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 flex-mobile-col">
         {isEditingName ? (
-          <div className="flex items-center gap-2" style={{ flexWrap: "wrap", flex: 1 }}>
+          <div className="flex items-center gap-2 flex-mobile-col" style={{ flexWrap: "wrap", flex: 1, width: "100%" }}>
             <h2 style={{ margin: 0 }}>👥 Quản lý:</h2>
-            <input 
-              className="form-input" 
-              value={editNameValue} 
-              onChange={e => setEditNameValue(e.target.value)}
-              style={{ padding: "0.25rem 0.5rem", width: "100%", maxWidth: "200px", fontSize: "1rem", fontWeight: "600" }}
-              autoFocus
-            />
-            <button onClick={handleUpdateGroup} className="btn btn-primary" style={{ padding: "0.25rem 0.75rem", borderRadius: "var(--radius)", width: "auto" }}>Lưu</button>
-            <button onClick={() => { setIsEditingName(false); setEditNameValue(group.name); }} className="btn btn-outline" style={{ padding: "0.25rem 0.75rem", borderRadius: "var(--radius)", width: "auto", color: "var(--foreground)" }}>Hủy</button>
+            <div className="flex gap-2" style={{ flex: 1, width: "100%" }}>
+              <input 
+                className="form-input" 
+                value={editNameValue} 
+                onChange={e => setEditNameValue(e.target.value)}
+                style={{ padding: "0.25rem 0.5rem", flex: 1, fontSize: "1rem", fontWeight: "600" }}
+                autoFocus
+              />
+              <button onClick={handleUpdateGroup} className="btn btn-primary" style={{ padding: "0.25rem 0.75rem", borderRadius: "var(--radius)", width: "auto" }}>Lưu</button>
+              <button onClick={() => { setIsEditingName(false); setEditNameValue(group.name); }} className="btn btn-outline" style={{ padding: "0.25rem 0.75rem", borderRadius: "var(--radius)", width: "auto", color: "var(--foreground)" }}>Hủy</button>
+            </div>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <h2 style={{ margin: 0 }}>👥 Quản lý: {group.name}</h2>
             <button onClick={() => setIsEditingName(true)} style={{ color: "var(--primary)", background: "none", border: "none", cursor: "pointer", fontSize: "1.25rem" }}>
               ✏️
@@ -89,8 +91,8 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
 
       <div className="card mb-8">
         <h3>+ Thêm thành viên</h3>
-        <form onSubmit={handleAddMember} className="flex gap-4 items-end mt-4">
-          <div className="form-group mb-0" style={{ flex: 1 }}>
+        <form onSubmit={handleAddMember} className="flex gap-4 items-end mt-4 flex-mobile-col" style={{ alignItems: "stretch" }}>
+          <div className="form-group mb-0" style={{ flex: 3 }}>
             <label className="form-label">Tên</label>
             <input 
               className="form-input" 
@@ -99,13 +101,13 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
               onChange={e => setNewMember({...newMember, name: e.target.value})}
             />
           </div>
-          <div className="form-group mb-0">
-            <label className="form-label">Emoji / Avatar</label>
+          <div className="form-group mb-0" style={{ flex: 1 }}>
+            <label className="form-label">Emoji</label>
             <input 
               className="form-input" 
               value={newMember.avatar}
               onChange={e => setNewMember({...newMember, avatar: e.target.value})}
-              style={{ width: "100px", textAlign: "center" }}
+              style={{ textAlign: "center" }}
             />
           </div>
           <button type="submit" className="btn btn-primary" style={{ width: "auto" }}>

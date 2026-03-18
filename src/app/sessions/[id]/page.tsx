@@ -8,6 +8,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
   const { id } = use(params);
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [showAddExpense, setShowAddExpense] = useState(false);
   
   const [expenseForm, setExpenseForm] = useState({
@@ -60,6 +61,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     e.preventDefault();
     if (!expenseForm.name || !expenseForm.amount || selectedParticipants.length === 0) return;
 
+    setSubmitting(true);
     await fetch("/api/expenses", {
       method: "POST",
       body: JSON.stringify({
@@ -74,6 +76,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     setExpenseForm({ name: "", amount: "", note: "" });
     setSelectedParticipants([]);
     setShowAddExpense(false);
+    setSubmitting(false);
     loadSession();
   };
 
@@ -123,11 +126,11 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 flex-mobile-col">
         <div>
           <h2>🍽️ {session.name}</h2>
           <p style={{ margin: 0 }}>
-            {new Date(session.date).toLocaleDateString("vi-VN")} • Ttổng cộng: <strong style={{ color: "var(--primary)", fontSize: "1.25rem" }}>{formatVND(session.totalAmount)}</strong>
+            {new Date(session.date).toLocaleDateString("vi-VN")} • Tổng cộng: <strong style={{ color: "var(--primary)", fontSize: "1.25rem" }}>{formatVND(session.totalAmount)}</strong>
           </p>
         </div>
         <Link href="/" className="btn btn-outline" style={{ width: "auto" }}>
@@ -135,9 +138,9 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </Link>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 350px", gap: "2rem" }}>
+      <div className="flex-mobile-col flex gap-8 items-start" style={{ display: "flex" }}>
         {/* Cột trái: Hóa đơn */}
-        <div>
+        <div style={{ flex: 1, width: "100%" }}>
           <div className="flex justify-between items-center mb-4">
             <h3>Danh sách món ăn</h3>
             <button 
@@ -152,7 +155,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
           {showAddExpense && (
             <div className="card mb-4" style={{ backgroundColor: "rgba(99, 102, 241, 0.05)", border: "2px solid var(--primary)" }}>
               <form onSubmit={handleAddExpense}>
-                <div className="flex gap-4">
+                <div className="flex gap-4 flex-mobile-col">
                   <div className="form-group flex-1">
                     <label className="form-label">Tên món</label>
                     <input className="form-input" required value={expenseForm.name} onChange={e => setExpenseForm({...expenseForm, name: e.target.value})} placeholder="Ăn gì..." />
@@ -207,7 +210,9 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                 </div>
                 <div className="flex justify-end gap-2 mt-4">
                   <button type="button" onClick={() => setShowAddExpense(false)} className="btn btn-outline" style={{ width: "auto" }}>Hủy</button>
-                  <button type="submit" disabled={selectedParticipants.length===0} className="btn btn-primary" style={{ width: "auto" }}>Lưu khoản chi</button>
+                  <button type="submit" disabled={submitting || selectedParticipants.length===0} className="btn btn-primary" style={{ width: "auto" }}>
+                    {submitting ? "Đang lưu..." : "Lưu khoản chi"}
+                  </button>
                 </div>
               </form>
             </div>
@@ -240,8 +245,8 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Cột phải: Kết quả chia tiền */}
-        <div>
-          <div className="card sticky" style={{ top: "2rem" }}>
+        <div className="flex-1" style={{ position: "sticky", top: "2rem", width: "100%", maxWidth: "400px" }}>
+          <div className="card">
             <h3 className="mb-4" style={{ textAlign: "center", borderBottom: "1px solid var(--border)", paddingBottom: "1rem" }}>💰 TỔNG KẾT</h3>
             
             <h4 style={{ color: "#94a3b8", fontSize: "0.875rem", textTransform: "uppercase" }}>Theo Nhóm / Gia đình</h4>
