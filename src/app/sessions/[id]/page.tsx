@@ -138,9 +138,9 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </Link>
       </div>
 
-      <div className="flex-mobile-col flex gap-12 items-start" style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+      <div className="flex-mobile-col flex gap-20 items-start" style={{ display: "flex", width: "100%" }}>
         {/* Cột trái: Hóa đơn */}
-        <div style={{ flex: 1, width: "100%" }}>
+        <div style={{ flex: 2, width: "100%" }}>
           <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
             <h3>Danh sách chi tiêu</h3>
             <button 
