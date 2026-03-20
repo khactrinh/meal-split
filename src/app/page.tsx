@@ -16,7 +16,8 @@ export default function Home() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadSessions = () => {
+    setLoading(true);
     fetch("/api/sessions")
       .then((res) => res.json())
       .then((data) => {
@@ -24,7 +25,26 @@ export default function Home() {
         setLoading(false);
       })
       .catch(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadSessions();
   }, []);
+
+  const handleDeleteSession = async (id: string, name: string) => {
+    if (!confirm(`Bạn có chắc chắn muốn xóa phiên "${name}"?`)) return;
+    try {
+      const response = await fetch(`/api/sessions/${id}`, { method: "DELETE" });
+      if (response.ok) {
+        loadSessions();
+      } else {
+        alert("Có lỗi xảy ra khi xóa phiên.");
+      }
+    } catch (error) {
+      console.error("Delete session error:", error);
+      alert("Có lỗi xảy ra.");
+    }
+  };
 
   return (
     <div className="animate-fade-in">
@@ -54,8 +74,8 @@ export default function Home() {
       ) : (
         <div className="flex-col gap-4">
           {sessions.map((session) => (
-            <Link href={`/sessions/${session.id}`} key={session.id}>
-              <div className="card flex justify-between items-center flex-mobile-col" style={{ cursor: "pointer", gap: "1rem" }}>
+            <div key={session.id} className="card flex justify-between items-center flex-mobile-col" style={{ gap: "1rem", position: "relative" }}>
+              <Link href={`/sessions/${session.id}`} style={{ flex: 1, textDecoration: "none", color: "inherit" }}>
                 <div>
                   <h3>{session.name}</h3>
                   <div className="flex gap-2 items-center" style={{ fontSize: "0.875rem", color: "#94a3b8" }}>
@@ -69,13 +89,22 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+              </Link>
+              <div className="flex items-center gap-4 flex-mobile-row">
                 <div style={{ textAlign: "right" }}>
                   <div style={{ fontSize: "1.25rem", fontWeight: "700", color: "var(--primary)" }}>
                     {formatVND(session.totalAmount)}
                   </div>
                 </div>
+                <button 
+                  onClick={() => handleDeleteSession(session.id, session.name)}
+                  className="btn btn-danger" 
+                  style={{ width: "auto", padding: "0.5rem", borderRadius: "8px", height: "fit-content" }}
+                >
+                  Xóa
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

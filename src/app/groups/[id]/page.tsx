@@ -11,6 +11,9 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
   const [newMember, setNewMember] = useState({ name: "", avatar: "👨" });
   const [isEditingName, setIsEditingName] = useState(false);
   const [editNameValue, setEditNameValue] = useState("");
+  const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
+  const [editingMemberName, setEditingMemberName] = useState("");
+  const [editingMemberAvatar, setEditingMemberAvatar] = useState("");
 
   const loadGroup = () => {
     fetch(`/api/groups/${id}`).then(r => r.json()).then(data => {
@@ -36,6 +39,26 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
   const handleRemoveMember = async (memberId: string) => {
     if (!confirm("Bạn chắc chắn muốn xóa thành viên này?")) return;
     await fetch(`/api/members/${memberId}`, { method: "DELETE" });
+    loadGroup();
+  };
+
+  const handleStartEditMember = (member: any) => {
+    setEditingMemberId(member.id);
+    setEditingMemberName(member.name);
+    setEditingMemberAvatar(member.avatar);
+  };
+
+  const handleUpdateMember = async (memberId: string) => {
+    if (!editingMemberName.trim()) return;
+    await fetch(`/api/members/${memberId}`, {
+      method: "PUT",
+      body: JSON.stringify({ 
+        name: editingMemberName, 
+        avatar: editingMemberAvatar,
+        groupId: id 
+      }),
+    });
+    setEditingMemberId(null);
     loadGroup();
   };
 
@@ -123,17 +146,50 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
         ) : (
           group.members?.map((m: any) => (
             <div key={m.id} className="card flex justify-between items-center" style={{ marginBottom: "0.5rem", padding: "1rem" }}>
-              <div className="flex items-center gap-4">
-                <span style={{ fontSize: "1.5rem" }}>{m.avatar}</span>
-                <span style={{ fontWeight: "600" }}>{m.name}</span>
-              </div>
-              <button 
-                onClick={() => handleRemoveMember(m.id)}
-                className="btn btn-danger" 
-                style={{ width: "auto", padding: "0.5rem", borderRadius: "8px" }}
-              >
-                Xóa
-              </button>
+              {editingMemberId === m.id ? (
+                <div className="flex flex-1 gap-2 flex-mobile-col" style={{ width: "100%" }}>
+                  <input 
+                    className="form-input" 
+                    value={editingMemberAvatar}
+                    onChange={e => setEditingMemberAvatar(e.target.value)}
+                    style={{ width: "50px", textAlign: "center" }}
+                  />
+                  <input 
+                    className="form-input" 
+                    value={editingMemberName}
+                    onChange={e => setEditingMemberName(e.target.value)}
+                    style={{ flex: 1 }}
+                    autoFocus
+                  />
+                  <div className="flex gap-2">
+                    <button onClick={() => handleUpdateMember(m.id)} className="btn btn-primary" style={{ width: "auto", padding: "0.5rem 1rem" }}>Lưu</button>
+                    <button onClick={() => setEditingMemberId(null)} className="btn btn-outline" style={{ width: "auto", padding: "0.5rem 1rem" }}>Hủy</button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center gap-4">
+                    <span style={{ fontSize: "1.5rem" }}>{m.avatar}</span>
+                    <span style={{ fontWeight: "600" }}>{m.name}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => handleStartEditMember(m)}
+                      className="btn btn-outline" 
+                      style={{ width: "auto", padding: "0.5rem", borderRadius: "8px", color: "var(--primary)", borderColor: "var(--primary)" }}
+                    >
+                      Sửa
+                    </button>
+                    <button 
+                      onClick={() => handleRemoveMember(m.id)}
+                      className="btn btn-danger" 
+                      style={{ width: "auto", padding: "0.5rem", borderRadius: "8px" }}
+                    >
+                      Xóa
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           ))
         )}
