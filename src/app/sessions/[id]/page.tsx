@@ -380,7 +380,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                        whiteSpace: "nowrap",
                        textDecoration: g.isSettled ? "line-through" : "none"
                      }}>
-                       {g.total > 0 ? `+ ${formatVND(g.total)}` : g.total < 0 ? `- ${formatVND(Math.abs(g.total))}` : formatVND(0)}
+                       {g.total > 0 ? `- ${formatVND(g.total)}` : g.total < 0 ? `+ ${formatVND(Math.abs(g.total))}` : formatVND(0)}
                      </span>
                      <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>
                        {g.isSettled ? "Xong" : g.total > 0 ? "Cần đóng" : g.total < 0 ? "Dư" : "Xong"}
@@ -422,7 +422,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                       color: m.isSettled ? "#94a3b8" : m.total > 0 ? "var(--warning)" : m.total < 0 ? "var(--success)" : "inherit",
                       textDecoration: m.isSettled ? "line-through" : "none"
                     }}>
-                      {m.total > 0 ? `+ ${formatVND(m.total)}` : m.total < 0 ? `- ${formatVND(Math.abs(m.total))}` : formatVND(0)}
+                      {m.total > 0 ? `- ${formatVND(m.total)}` : m.total < 0 ? `+ ${formatVND(Math.abs(m.total))}` : formatVND(0)}
                     </span>
                     <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>
                       {m.isSettled ? "Đã xong" : m.total > 0 ? "Cần đóng thêm" : m.total < 0 ? "Tiền thừa" : "Đã xong"}
