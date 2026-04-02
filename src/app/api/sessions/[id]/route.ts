@@ -25,6 +25,7 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ id: st
           }
         },
       },
+      prepaids: true,
     },
   });
   if (!session || session.userId !== userId) return NextResponse.json({ error: "Not found" }, { status: 404 });

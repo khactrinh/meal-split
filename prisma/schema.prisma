@@ -78,18 +78,19 @@ model Group {
 
 // Thành viên
 model Member {
-  id        String   @id @default(cuid())
-  name      String
-  avatar    String?  // emoji or initial
-  groupId   String?
-  group     Group?   @relation(fields: [groupId], references: [id], onDelete: SetNull)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  name          String
+  avatar        String?  // emoji or initial
+  groupId       String?
+  group         Group?   @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   
   userId    String?  // null = Guest
   user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   expenseParticipants ExpenseParticipant[]
+  prepaidAmounts      SessionPrepaid[]
 }
 
 // Phiên chia tiền (buổi ăn) thay tên từ Session thành MealSession
@@ -108,6 +109,20 @@ model MealSession {
 
   expenses    Expense[]
   groups      SessionGroup[]
+  prepaids    SessionPrepaid[]
+}
+
+// Số tiền ứng trước theo từng phiên
+model SessionPrepaid {
+  id            String      @id @default(cuid())
+  mealSessionId String
+  memberId      String
+  amount        Float       @default(0)
+  isSettled     Boolean     @default(false)
+  mealSession   MealSession @relation(fields: [mealSessionId], references: [id], onDelete: Cascade)
+  member        Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@unique([mealSessionId, memberId])
 }
 
 // Mối quan hệ Session - Group
@@ -115,6 +130,7 @@ model SessionGroup {
   id            String  @id @default(cuid())
   mealSessionId String
   groupId       String
+  isSettled     Boolean     @default(false)
   mealSession   MealSession @relation(fields: [mealSessionId], references: [id], onDelete: Cascade)
   group         Group       @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
