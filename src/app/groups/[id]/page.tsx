@@ -78,7 +78,22 @@ export default function GroupDetailPage({ params }: { params: Promise<{ id: stri
     window.location.href = "/groups";
   };
 
-  if (loading) return <div>Đang tải...</div>;
+  if (loading) return (
+    <div className="animate-fade-in card" style={{ 
+      padding: "4rem 2rem", 
+      display: "flex", 
+      flexDirection: "column",
+      alignItems: "center", 
+      justifyContent: "center",
+      backgroundColor: "rgba(15, 23, 42, 0.4)", 
+      backdropFilter: "blur(2px)",
+      border: "1px dashed var(--border)",
+      margin: "2rem 0"
+    }}>
+      <div className="animate-spin mb-4" style={{ fontSize: "2.5rem" }}>⏳</div>
+      <span style={{ fontSize: "1rem", fontWeight: "600", color: "white" }}>Đang tải dữ liệu nhóm...</span>
+    </div>
+  );
   if (!group) return <div>Không tìm thấy nhóm</div>;
 
   return (

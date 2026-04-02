@@ -175,7 +175,22 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     loadSession();
   };
 
-  if (loading) return <div>Đang tải...</div>;
+  if (loading) return (
+    <div className="animate-fade-in card" style={{ 
+      padding: "4rem 2rem", 
+      display: "flex", 
+      flexDirection: "column",
+      alignItems: "center", 
+      justifyContent: "center",
+      backgroundColor: "rgba(15, 23, 42, 0.4)", 
+      backdropFilter: "blur(2px)",
+      border: "1px dashed var(--border)",
+      margin: "2rem 0"
+    }}>
+      <div className="animate-spin mb-4" style={{ fontSize: "2.5rem" }}>⏳</div>
+      <span style={{ fontSize: "1rem", fontWeight: "600", color: "white" }}>Đang tải dữ liệu phiên...</span>
+    </div>
+  );
   if (!session || session.error) return <div style={{ textAlign: "center", padding: "4rem", color: "var(--danger)" }}>Không tìm thấy hoặc bạn không có quyền truy cập phiên này.</div>;
 
   return (
@@ -354,8 +369,30 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Cột phải: Kết quả chia tiền */}
-        <div className="flex-1" style={{ position: "sticky", top: "2rem", width: "100%", maxWidth: "450px", minWidth: "350px" }}>
-          <div className="card" style={{ padding: "2rem" }}>
+        <div className="flex-1" style={{ position: "sticky", top: "2rem", width: "100%", maxWidth: "450px", minWidth: "350px", zIndex: 10 }}>
+          <div className="card" style={{ padding: "2rem", position: "relative", overflow: "hidden" }}>
+            
+            {/* Loading Overlay */}
+            {settlingId && (
+              <div 
+                style={{ 
+                  position: "absolute", 
+                  inset: 0, 
+                  backgroundColor: "rgba(15, 23, 42, 0.6)", 
+                  backdropFilter: "blur(2px)",
+                  zIndex: 20, 
+                  display: "flex", 
+                  flexDirection: "column",
+                  alignItems: "center", 
+                  justifyContent: "center",
+                  cursor: "not-allowed"
+                }}
+              >
+                <div className="animate-spin mb-2" style={{ fontSize: "2rem" }}>⏳</div>
+                <span style={{ fontSize: "0.875rem", fontWeight: "600", color: "white" }}>Đang đồng bộ...</span>
+              </div>
+            )}
+
             <h3 className="mb-4" style={{ textAlign: "center", borderBottom: "1px solid var(--border)", paddingBottom: "1rem" }}>💰 TỔNG KẾT</h3>
             
             <h4 style={{ color: "#94a3b8", fontSize: "0.875rem", textTransform: "uppercase" }}>Theo Nhóm / Gia đình</h4>

@@ -69,7 +69,21 @@ export default function GroupsPage() {
       </div>
 
       <div className="flex-col gap-4">
-        {loading ? <p>Đang tải...</p> : groups.map(group => (
+        {loading ? (
+          <div className="card" style={{ 
+            padding: "4rem 2rem", 
+            display: "flex", 
+            flexDirection: "column",
+            alignItems: "center", 
+            justifyContent: "center",
+            backgroundColor: "rgba(15, 23, 42, 0.4)", 
+            backdropFilter: "blur(2px)",
+            border: "1px dashed var(--border)"
+          }}>
+            <div className="animate-spin mb-4" style={{ fontSize: "2.5rem" }}>⏳</div>
+            <span style={{ fontSize: "1rem", fontWeight: "600", color: "white" }}>Đang tải danh sách nhóm...</span>
+          </div>
+        ) : groups.map(group => (
           <div key={group.id} className="card" style={{ borderLeft: `4px solid ${group.color}` }}>
             <div className="flex justify-between items-center mb-4 flex-mobile-col">
               <div className="flex items-center gap-2 flex-wrap">

@@ -59,8 +59,18 @@ export default function Home() {
       </div>
 
       {loading ? (
-        <div style={{ textAlign: "center", padding: "3rem", color: "#94a3b8" }}>
-          Đang tải dữ liệu...
+        <div className="card" style={{ 
+          padding: "4rem 2rem", 
+          display: "flex", 
+          flexDirection: "column",
+          alignItems: "center", 
+          justifyContent: "center",
+          backgroundColor: "rgba(15, 23, 42, 0.4)", 
+          backdropFilter: "blur(2px)",
+          border: "1px dashed var(--border)"
+        }}>
+          <div className="animate-spin mb-4" style={{ fontSize: "2.5rem" }}>⏳</div>
+          <span style={{ fontSize: "1rem", fontWeight: "600", color: "white" }}>Đang tải dữ liệu...</span>
         </div>
       ) : sessions.length === 0 ? (
         <div className="card" style={{ textAlign: "center", padding: "4rem 2rem", borderStyle: "dashed", borderColor: "var(--border)" }}>
